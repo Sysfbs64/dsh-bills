@@ -1,0 +1,13 @@
+# dsh-bills bundle patch: inserts the dual-face plugin row into the web
+# profile roster. Applied as a profile bundle layer (the `dsh.bundle.patch`
+# manifest field) over dsh-base; activate with
+# `dsh plugin --profile <name> add link:~/code/dsh-bills`.
+#
+# The row is a bare plugin by package name: the node half (exports ".") runs
+# in the host process (bill aggregation, incremental sync, /api/dsh-bills
+# routes), and the `dsh.client` declaration in package.json makes the browser
+# half (exports "./client", served at /plugins/<id>/client.js) load in the
+# web GUI (conversation.view 「账单」标签页 + 会话头部「账单」按钮).
+- insert:
+    - id: bills
+      name: 'dsh-bills'

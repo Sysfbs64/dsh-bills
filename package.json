@@ -1,0 +1,30 @@
+{
+  "name": "dsh-bills",
+  "version": "0.2.0",
+  "description": "DSH Web GUI 模型用量账单：按会话聚合 token 用量并按 DeepSeek 官方峰谷价目表估算费用（含周末全天低谷价）；支持 7d / 14d / 30d / 自定义时间窗口的统计卡片、柱状图、热力图与按会话明细表；账单以会话标签页形式整页阅览；增量同步（事件驱动 + 轮询水位线）+ 磁盘缓存常驻。",
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "default": "./lib/index.js"
+    },
+    "./client": {
+      "default": "./lib/client.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "inject": [
+        "@deepseek-ai/dsh-client-runtime",
+        "@deepseek-ai/dsh-client-connection",
+        "@deepseek-ai/dsh-client-ui-settings"
+      ],
+      "platform": "web"
+    }
+  }
+}
