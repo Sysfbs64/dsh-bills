@@ -29,7 +29,7 @@ dsh plugin --profile web add github:Sysfbs64/dsh-bills
 
 - 数据来源：会话日志中 `assistant/message` 事件的 token 用量（输入 / 输出 /
   缓存读 / 缓存写 / 推理），按调用时间逐次计价。
-- 磁盘缓存：账单页顶部「账单缓存位置」一行可**自定义缓存目录**——点「浏览…」
+- 磁盘缓存：账单页底部「账单缓存位置」一行可**自定义缓存目录**——点「浏览…」
   调用**系统文件夹选择器**（宿主原生 `workspaces.pickDirectory`）选定路径后点
   保存，或点恢复默认；默认 **`$DSH_HOME/profiles/`**（即
   `~/.dsh/profiles/`，用户数据区，不写工作区）。读写直接走 `node:fs`
