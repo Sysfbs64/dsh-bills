@@ -20,26 +20,9 @@ DSH (DeepSeek Harness) Web GUI 的模型用量账单插件：按会话聚合模�
   永不重读；缓存版本升级时自动全量重算。
 
 ## 安装
-
-先克隆仓库，再以**软链**方式安装到 dsh 的 web profile（软链方式下直接改仓库源码
-即可，无需重新安装，重启 `dsh web` 后生效）：
-
-```sh
-# 1. 克隆仓库（示例：放到 ~/code 下）
-git clone git@github.com:Sysfbs64/dsh-bills.git ~/code/dsh-bills
-
-# 2. 软链安装（link: 前缀 = 在 profile 的 node_modules 中建立软链）
-dsh plugin add link:~/code/dsh-bills
-
-# 若你使用自定义 profile，带上 --profile 参数，例如：
-# dsh plugin --profile web add link:~/code/dsh-bills
+需要确保pnpm可用。
 ```
-
-安装完成后重启 `dsh web`，任意会话头部出现「账单」按钮，会话标签栏出现「账单」
-标签。确认安装结果：
-
-```sh
-ls -l ~/.dsh/profiles/node_modules/dsh-bills   # 应显示指向克隆目录的软链
+dsh plugin --profile web add github:Sysfbs64/dsh-bills
 ```
 
 ## 数据与缓存
