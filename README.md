@@ -21,18 +21,26 @@ DSH (DeepSeek Harness) Web GUI 的模型用量账单插件：按会话聚合模�
 
 ## 安装
 
+先克隆仓库，再以**软链**方式安装到 dsh 的 web profile（软链方式下直接改仓库源码
+即可，无需重新安装，重启 `dsh web` 后生效）：
+
 ```sh
-# 在插件源码目录外，把本包挂到 dsh 的 web profile（软链方式，改代码即生效）
+# 1. 克隆仓库（示例：放到 ~/code 下）
+git clone git@github.com:Sysfbs64/dsh-bills.git ~/code/dsh-bills
+
+# 2. 软链安装（link: 前缀 = 在 profile 的 node_modules 中建立软链）
 dsh plugin add link:~/code/dsh-bills
+
+# 若你使用自定义 profile，带上 --profile 参数，例如：
+# dsh plugin --profile web add link:~/code/dsh-bills
 ```
 
-重启 `dsh web` 后，任意会话头部出现「账单」按钮，会话标签栏出现「账单」标签。
+安装完成后重启 `dsh web`，任意会话头部出现「账单」按钮，会话标签栏出现「账单」
+标签。确认安装结果：
 
-## 使用
-
-1. 点击会话头部「账单」按钮（或会话标签栏「账单」标签）进入账单页。
-2. 顶部阅览窗口选择 `7 天 / 14 天 / 30 天 / 自定义`，全页统计随窗口联动。
-3. 柱状图与热力图悬停查看逐项数值；明细表点击行展开逐日花费。
+```sh
+ls -l ~/.dsh/profiles/node_modules/dsh-bills   # 应显示指向克隆目录的软链
+```
 
 ## 数据与缓存
 
@@ -42,24 +50,6 @@ dsh plugin add link:~/code/dsh-bills
   时间窗口统计直接由此派生；由宿主 `/api/dsh-bills/summary`、`/api/dsh-bills/charts`
   路由提供，浏览器半部同源 fetch 读取。
 - 缓存版本升级（数据结构变更）会忽略旧缓存并触发一次全量基线重算。
-
-## 目录结构
-
-```text
-lib/index.js              宿主半部：事件折叠、计价、增量同步、HTTP 路由、磁盘缓存
-lib/client.js             浏览器半部：账单标签页（时间窗口 / 图表 / 明细表 / 悬浮层）
-lib/types/index.d.ts      安装包类型声明（API 负载形状）
-cordis.patch.yml          bundle 补丁：向 web profile 注册插件行
-```
-
-## 开发
-
-```sh
-node --check lib/index.js lib/client.js   # 语法检查
-```
-
-宿主半部可用假会话事件驱动「折叠 → 持久化 → 加载 → 路由输出」整条链路做端到端验证
-（见仓库开发笔记 / 提交说明）；浏览器半部可在 jsdom + 真实 React 下渲染整页断言。
 
 ## 免责声明
 
