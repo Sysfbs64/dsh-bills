@@ -26,5 +26,6 @@
       ],
       "platform": "web"
     }
-  }
+  },
+  "license": "GPL-3.0-only"
 }
