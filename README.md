@@ -29,10 +29,17 @@ dsh plugin --profile web add github:Sysfbs64/dsh-bills
 
 - 数据来源：会话日志中 `assistant/message` 事件的 token 用量（输入 / 输出 /
   缓存读 / 缓存写 / 推理），按调用时间逐次计价。
-- 磁盘缓存：工作区 `.bills-cache.json`（v4）。含按会话按日折叠与按日分模型聚合，
-  时间窗口统计直接由此派生；由宿主 `/api/dsh-bills/summary`、`/api/dsh-bills/charts`
+- 磁盘缓存：账单页顶部「账单缓存位置」一行可**自定义缓存目录**——点「浏览…」
+  调用**系统文件夹选择器**（宿主原生 `workspaces.pickDirectory`）选定路径后点
+  保存，或点恢复默认；默认 **`$DSH_HOME/profiles/`**（即
+  `~/.dsh/profiles/`，用户数据区，不写工作区）。读写直接走 `node:fs`
+  （宿主侧插件与宿主同权，不经 fs 沙箱），配置持久化于
+  `$DSH_HOME/profiles/.dsh-bills-config.json`；切换目录时旧缓存自动迁移。
+  含按会话按日折叠与按日分模型聚合，时间窗口统计直接由此派生；由宿主
+  `/api/dsh-bills/summary`、`/api/dsh-bills/charts`、`/api/dsh-bills/config`
   路由提供，浏览器半部同源 fetch 读取。
-- 缓存版本升级（数据结构变更）会忽略旧缓存并触发一次全量基线重算。
+- 缓存版本升级（数据结构变更）会忽略旧缓存并触发一次全量基线重算；
+  首次迁移到新位置时同样以一次全量基线重建。
 
 ## 免责声明
 
