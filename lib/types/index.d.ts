@@ -3,6 +3,8 @@ export interface Pricing {
   effectiveAt: number;
   effectiveLabel: string;
   peakLabel: string;
+  /** 最近一次价目/模型路由变更说明（2026-09-10 V4.1 Flash 降价、2026-09-14 v4-pro 路由）。 */
+  latestLabel?: string;
   exchangeNote: string;
 }
 
